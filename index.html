@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>👑 プリンセスのまほうのリズムレッスン ✨</title>
+  <!-- Google Fonts: Zen Maru Gothic -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+  <!-- VexFlow 4.2.2 -->
+  <script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js"></script>
+  <style>
+    :root {
+      /* プリンセス・テーマカラー */
+      --bg-gradient: linear-gradient(135deg, #fff2f6 0%, #fde4ec 50%, #f3e5f5 100%);
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --primary-pink: #ff6584;
+      --primary-pink-hover: #ff476e;
+      --secondary-pink: #f8bbd0;
+      --gold-accent: #f7a934;
+      --gold-hover: #e5931b;
+      --stop-color: #ef5350;
+      --text-main: #4a2e35;
+      --text-soft: #855b66;
+      --border-color: #ffd6e0;
+      --note-highlight: #ff2d78;
+      --shadow-pink: 0 10px 30px rgba(255, 101, 132, 0.15);
+      --shadow-btn: 0 4px 14px rgba(255, 101, 132, 0.28);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Zen Maru Gothic", "Hiragino Maru Gothic ProN", sans-serif;
+      background: var(--bg-gradient);
+      min-height: 100vh;
+      color: var(--text-main);
+      margin: 0;
+      padding: 28px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+      max-width: 940px;
+      width: 100%;
+      background: var(--card-bg);
+      border-radius: 28px;
+      box-shadow: var(--shadow-pink);
+      padding: 32px 28px;
+      border: 3px solid #ffffff;
+      position: relative;
+    }
+
+    /* 上部のキラキラリボン風装飾線 */
+    .container::before {
+      content: "";
+      position: absolute;
+      top: -3px;
+      left: 10%;
+      right: 10%;
+      height: 6px;
+      background: linear-gradient(90deg, transparent, #ff8da1, #ffd54f, #ff8da1, transparent);
+      border-radius: 3px;
+    }
+
+    h1 {
+      margin: 0 0 6px 0;
+      font-size: 1.65rem;
+      font-weight: 900;
+      color: var(--primary-pink);
+      text-align: center;
+      letter-spacing: 0.04em;
+      text-shadow: 0 2px 4px rgba(255, 101, 132, 0.15);
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 0.88rem;
+      color: var(--text-soft);
+      margin: 0 0 22px 0;
+      font-weight: 500;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #fff5f8, #fdf0f5);
+      padding: 16px 22px;
+      border-radius: 20px;
+      border: 2px dashed #fcccd8;
+      margin-bottom: 24px;
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .control-group label {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    select {
+      padding: 8px 14px;
+      border-radius: 14px;
+      border: 2px solid #ffccd7;
+      background: #ffffff;
+      font-family: inherit;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-main);
+      cursor: pointer;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    select:focus {
+      border-color: var(--primary-pink);
+      box-shadow: 0 0 0 3px rgba(255, 101, 132, 0.2);
+    }
+
+    input[type="range"] {
+      accent-color: var(--primary-pink);
+      cursor: pointer;
+    }
+
+    .bpm-badge {
+      background: #ffffff;
+      padding: 3px 8px;
+      border-radius: 10px;
+      border: 1px solid #ffd6e0;
+      color: var(--primary-pink);
+      font-weight: 900;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    button {
+      font-family: inherit;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 9999px;
+      font-size: 0.98rem;
+      font-weight: 900;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    }
+
+    button:hover {
+      transform: translateY(-2px) scale(1.02);
+    }
+
+    button:active {
+      transform: translateY(1px) scale(0.98);
+    }
+
+    .btn-generate {
+      background: linear-gradient(135deg, #ff7597, #ff527b);
+      color: #ffffff;
+      box-shadow: var(--shadow-btn);
+    }
+    .btn-generate:hover {
+      background: linear-gradient(135deg, #ff6087, #f03e68);
+      box-shadow: 0 6px 18px rgba(255, 101, 132, 0.38);
+    }
+
+    .btn-play {
+      background: linear-gradient(135deg, #f9b233, #f59e0b);
+      color: #ffffff;
+      min-width: 220px;
+      justify-content: center;
+      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.3);
+    }
+    .btn-play:hover {
+      background: linear-gradient(135deg, #f5a623, #e08b00);
+      box-shadow: 0 6px 18px rgba(245, 158, 11, 0.4);
+    }
+    .btn-play.playing {
+      background: linear-gradient(135deg, #ff6b6b, #ef5350);
+      box-shadow: 0 4px 14px rgba(239, 83, 80, 0.35);
+    }
+
+    .btn-print {
+      background: #ffffff;
+      color: var(--text-soft);
+      border: 2px solid #ffd6e0;
+    }
+    .btn-print:hover {
+      background: #fff5f8;
+      color: var(--primary-pink);
+      border-color: var(--primary-pink);
+    }
+
+    .status-bar {
+      text-align: center;
+      min-height: 28px;
+      font-weight: 700;
+      color: var(--primary-pink);
+      margin-bottom: 12px;
+      font-size: 1.05rem;
+      letter-spacing: 0.03em;
+    }
+
+    #score-container {
+      width: 100%;
+      overflow-x: auto;
+      display: flex;
+      justify-content: center;
+      padding: 16px 8px;
+      min-height: 220px;
+      background: #ffffff;
+      border-radius: 20px;
+      border: 2px solid #fae1e7;
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+        padding: 0;
+      }
+      .container {
+        box-shadow: none;
+        border: none;
+        max-width: 100%;
+        padding: 10px;
+      }
+      .container::before, .controls, .btn-group, .status-bar, .subtitle {
+        display: none !important;
+      }
+      #score-container {
+        border: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>👑 プリンセスのまほうのリズムレッスン ✨</h1>
+  <div class="subtitle">きょうはどんなリズムをかなでる？ステッキをふってリズムを作ろう💖</div>
+
+  <div class="controls">
+    <div class="control-group">
+      <label for="level">🎀 レベル:</label>
+      <select id="level">
+        <option value="easy">初級（4分・8分・長休符）</option>
+        <option value="medium" selected>中級（16分音符入り）</option>
+        <option value="hard">上級（タイ・ウラ拍）</option>
+      </select>
+    </div>
+
+    <div class="control-group">
+      <label for="timeSig">🎵 拍子:</label>
+      <select id="timeSig">
+        <option value="4" selected>4/4 拍子</option>
+        <option value="3">3/4 拍子</option>
+        <option value="2">2/4 拍子</option>
+      </select>
+    </div>
+
+    <div class="control-group">
+      <label for="measures">🏰 小節数:</label>
+      <select id="measures">
+        <option value="2">2小節</option>
+        <option value="4" selected>4小節</option>
+        <option value="8">8小節</option>
+      </select>
+    </div>
+
+    <div class="control-group">
+      <label for="bpm">💖 はやさ:</label>
+      <input type="range" id="bpm" min="50" max="140" value="85">
+      <span class="bpm-badge"><span id="bpm-val">85</span> BPM</span>
+    </div>
+  </div>
+
+  <div class="btn-group">
+    <button type="button" class="btn-generate" id="generate-btn">🪄 あたらしいリズムを作る</button>
+    <button type="button" class="btn-play" id="play-btn">▶️ ならす（カウントつき）</button>
+    <button type="button" class="btn-print" id="print-btn">🖨️ ぷりんと</button>
+  </div>
+
+  <div class="status-bar" id="status-text"></div>
+
+  <div id="score-container"></div>
+</div>
+
+<script>
+  const { Renderer, Stave, StaveNote, Voice, Formatter, Beam, StaveTie, Dot } = Vex.Flow;
+
+  // 基本の1拍パターン
+  const BEAT_PATTERNS = {
+    easy: [
+      [{ d: 'q', r: false, len: 1.0 }],
+      [{ d: '8', r: false, len: 0.5 }, { d: '8', r: false, len: 0.5 }],
+      [{ d: 'q', r: true,  len: 1.0 }] // 4分休符
+    ],
+    medium: [
+      [{ d: 'q', r: false, len: 1.0 }],
+      [{ d: '8', r: false, len: 0.5 }, { d: '8', r: false, len: 0.5 }],
+      [{ d: '16', r: false, len: 0.25 }, { d: '16', r: false, len: 0.25 }, { d: '16', r: false, len: 0.25 }, { d: '16', r: false, len: 0.25 }],
+      [{ d: '8', r: false, len: 0.5 }, { d: '16', r: false, len: 0.25 }, { d: '16', r: false, len: 0.25 }],
+      [{ d: '16', r: false, len: 0.25 }, { d: '16', r: false, len: 0.25 }, { d: '8', r: false, len: 0.5 }],
+      [{ d: 'q', r: true,  len: 1.0 }]
+    ],
+    hard: [
+      [{ d: 'q', r: false, len: 1.0 }],
+      [{ d: '8', r: false, len: 0.5 }, { d: '8', r: false, len: 0.5 }],
+      [{ d: '16', r: false, len: 0.25 }, { d: '16', r: false, len: 0.25 }, { d: '16', r: false, len: 0.25 }, { d: '16', r: false, len: 0.25 }],
+      [{ d: '8', r: false, len: 0.5 }, { d: '16', r: false, len: 0.25 }, { d: '16', r: false, len: 0.25 }],
+      [{ d: '16', r: false, len: 0.25 }, { d: '16', r: false, len: 0.25 }, { d: '8', r: false, len: 0.5 }],
+      [{ d: '8', r: true,  len: 0.5 }, { d: '8', r: false, len: 0.5 }],
+      [{ d: '16', r: true, len: 0.25 }, { d: '16', r: false, len: 0.25 }, { d: '8', r: false, len: 0.5 }],
+      [{ d: '16', r: true, len: 0.25 }, { d: '16', r: false, len: 0.25 }, { d: '16', r: false, len: 0.25 }, { d: '16', r: false, len: 0.25 }],
+      [{ d: '8', r: true,  len: 0.5 }, { d: '16', r: false, len: 0.25 }, { d: '16', r: false, len: 0.25 }],
+      [{ d: '16', r: false, len: 0.25 }, { d: '8', r: false, len: 0.5 }, { d: '16', r: false, len: 0.25 }],
+      [{ d: 'q', r: true,  len: 1.0 }]
+    ]
+  };
+
+  let playbackQueue = [];
+  let isPlaying = false;
+  let audioCtx = null;
+  let timers = [];
+  let activeOscillators = [];
+
+  const bpmSlider = document.getElementById('bpm');
+  const bpmVal = document.getElementById('bpm-val');
+  const statusText = document.getElementById('status-text');
+  const playBtn = document.getElementById('play-btn');
+
+  bpmSlider.addEventListener('input', (e) => {
+    bpmVal.textContent = e.target.value;
+  });
+
+  // 小節の残り拍数（remBeats）に合わせてパターンを選択（二分休符・付点二分休符・全休符を含む）
+  function pickPatternForRemaining(level, remBeats, isFirstOfScore, timeSig) {
+    const candidates = [];
+
+    // 1. 全休符（4拍分）：4/4拍子で小節の頭（4拍残り）のときに候補
+    if (remBeats === 4 && timeSig === 4) {
+      if (!isFirstOfScore) {
+        candidates.push({ pattern: [{ d: 'w', r: true, len: 4.0, dots: 0 }], weight: 1.2 });
+      }
+    }
+
+    // 2. 付点二分休符（3拍分）：残り3拍以上のときに候補
+    if (remBeats >= 3) {
+      if (!isFirstOfScore) {
+        candidates.push({ pattern: [{ d: 'h', r: true, len: 3.0, dots: 1 }], weight: 1.5 });
+      }
+      candidates.push({ pattern: [{ d: 'h', r: false, len: 3.0, dots: 1 }], weight: 2.0 });
+    }
+
+    // 3. 二分休符（2拍分）：残り2拍以上のときに候補
+    if (remBeats >= 2) {
+      if (!isFirstOfScore) {
+        candidates.push({ pattern: [{ d: 'h', r: true, len: 2.0, dots: 0 }], weight: 2.2 });
+      }
+      candidates.push({ pattern: [{ d: 'h', r: false, len: 2.0, dots: 0 }], weight: 3.0 });
+    }
+
+    // 4. 基本の1拍パターン
+    const base1Beat = BEAT_PATTERNS[level];
+    base1Beat.forEach(p => {
+      if (isFirstOfScore && p[0].r) return;
+      const weight = (p.length === 1 && p[0].r) ? 1.8 : 4.0;
+      candidates.push({ pattern: p, weight });
+    });
+
+    // 重み付きランダム抽選
+    const totalWeight = candidates.reduce((sum, c) => sum + c.weight, 0);
+    let rand = Math.random() * totalWeight;
+    for (const c of candidates) {
+      if (rand < c.weight) return c.pattern;
+      rand -= c.weight;
+    }
+    return candidates[candidates.length - 1].pattern;
+  }
+
+  function generateAndDraw() {
+    stopPlayback();
+
+    const container = document.getElementById('score-container');
+    container.innerHTML = '';
+
+    const level = document.getElementById('level').value;
+    const beatsPerMeasure = parseInt(document.getElementById('timeSig').value, 10);
+    const totalMeasures = parseInt(document.getElementById('measures').value, 10);
+
+    const measuresPerRow = 2;
+    const rows = Math.ceil(totalMeasures / measuresPerRow);
+    const canvasWidth = 860;
+    const rowHeight = 140;
+    const canvasHeight = rows * rowHeight + 30;
+
+    const renderer = new Renderer(container, Renderer.Backends.SVG);
+    renderer.resize(canvasWidth, canvasHeight);
+    const context = renderer.getContext();
+
+    playbackQueue = [];
+    let currentBeatPosition = 0;
+
+    for (let m = 0; m < totalMeasures; m++) {
+      const row = Math.floor(m / measuresPerRow);
+      const col = m % measuresPerRow;
+
+      const staveWidth = (canvasWidth - 60) / measuresPerRow;
+      const x = 30 + col * staveWidth;
+      const y = 20 + row * rowHeight;
+
+      const stave = new Stave(x, y, staveWidth);
+
+      if (col === 0) {
+        stave.addClef('percussion');
+      }
+      if (m === 0) {
+        stave.addTimeSignature(`${beatsPerMeasure}/4`);
+      }
+      if (m === totalMeasures - 1) {
+        stave.setEndBarType(Vex.Flow.Barline.type.END);
+      }
+
+      stave.setContext(context).draw();
+
+      const measureNotes = [];
+      const measureBeams = [];
+      const measureTies = [];
+      let prevBeatLastItem = null;
+
+      let currentMeasureBeat = 0;
+      while (currentMeasureBeat < beatsPerMeasure) {
+        const remBeats = beatsPerMeasure - currentMeasureBeat;
+        const isFirstOfScore = (m === 0 && currentMeasureBeat === 0);
+        const pattern = pickPatternForRemaining(level, remBeats, isFirstOfScore, beatsPerMeasure);
+
+        const beatVexNotes = [];
+        const beatQueueItems = [];
+
+        pattern.forEach(item => {
+          const durString = item.r ? item.d + 'r' : item.d;
+          const note = new StaveNote({
+            clef: 'percussion',
+            keys: ['b/4'],
+            duration: durString,
+            dots: item.dots || 0,
+            stem_direction: 1
+          });
+
+          if (item.dots) {
+            for (let i = 0; i < item.dots; i++) {
+              Dot.buildAndAttach([note]);
+            }
+          }
+
+          beatVexNotes.push(note);
+          measureNotes.push(note);
+
+          const queueItem = {
+            vexNote: note,
+            isRest: item.r,
+            isTiedContinuation: false,
+            beatOffset: currentBeatPosition,
+            durationBeats: item.len
+          };
+
+          playbackQueue.push(queueItem);
+          beatQueueItems.push(queueItem);
+
+          currentBeatPosition += item.len;
+          currentMeasureBeat += item.len;
+        });
+
+        if (level === 'hard' && prevBeatLastItem && beatQueueItems.length > 0) {
+          const firstItemOfCurrentBeat = beatQueueItems[0];
+          if (!prevBeatLastItem.isRest && !firstItemOfCurrentBeat.isRest && !prevBeatLastItem.isTiedContinuation) {
+            if (Math.random() < 0.35) {
+              firstItemOfCurrentBeat.isTiedContinuation = true;
+              const tie = new StaveTie({
+                first_note: prevBeatLastItem.vexNote,
+                last_note: firstItemOfCurrentBeat.vexNote,
+                first_indices: [0],
+                last_indices: [0]
+              });
+              tie.setDirection(-1);
+              measureTies.push(tie);
+            }
+          }
+        }
+
+        prevBeatLastItem = beatQueueItems[beatQueueItems.length - 1];
+
+        const beamable = beatVexNotes.filter(n => !n.isRest());
+        if (beatVexNotes.length > 1 && beamable.length === beatVexNotes.length) {
+          measureBeams.push(new Beam(beatVexNotes));
+        } else if (beatVexNotes.length > 2) {
+          const autoBeams = Beam.generateBeams(beatVexNotes, {
+            groups: [new Vex.Flow.Fraction(1, 4)]
+          });
+          measureBeams.push(...autoBeams);
+        }
+      }
+
+      const voice = new Voice({ num_beats: beatsPerMeasure, beat_value: 4 });
+      voice.addTickables(measureNotes);
+
+      const justifyWidth = stave.getNoteEndX() - stave.getNoteStartX() - 15;
+      new Formatter().joinVoices([voice]).format([voice], justifyWidth);
+
+      voice.draw(context, stave);
+      measureBeams.forEach(beam => beam.setContext(context).draw());
+      measureTies.forEach(tie => tie.setContext(context).draw());
+    }
+  }
+
+  function scheduleSound(when, freq, isWoodblock = false) {
+    if (!audioCtx) return;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+
+    osc.type = isWoodblock ? 'triangle' : 'sine';
+    osc.frequency.setValueAtTime(freq, when);
+    if (isWoodblock) {
+      osc.frequency.exponentialRampToValueAtTime(freq * 0.65, when + 0.055);
+    }
+
+    gain.gain.setValueAtTime(isWoodblock ? 0.38 : 0.28, when);
+    gain.gain.exponentialRampToValueAtTime(0.001, when + 0.075);
+
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    osc.start(when);
+    osc.stop(when + 0.08);
+
+    osc.onended = () => {
+      osc.disconnect();
+      gain.disconnect();
+    };
+    activeOscillators.push(osc);
+  }
+
+  function highlightNote(vexNote, active) {
+    if (!vexNote) return;
+    let el = null;
+    if (typeof vexNote.getSVGElement === 'function') {
+      el = vexNote.getSVGElement();
+    } else if (vexNote.attrs && vexNote.attrs.el) {
+      el = vexNote.attrs.el;
+    }
+    if (!el) return;
+
+    const color = active ? '#ff2d78' : '#332228';
+    const paths = el.querySelectorAll('path, rect');
+    paths.forEach(p => {
+      p.setAttribute('fill', color);
+      p.setAttribute('stroke', color);
+    });
+  }
+
+  function clearAllHighlights() {
+    playbackQueue.forEach(item => highlightNote(item.vexNote, false));
+  }
+
+  function stopPlayback() {
+    isPlaying = false;
+
+    timers.forEach(t => clearTimeout(t));
+    timers = [];
+
+    activeOscillators.forEach(osc => {
+      try { osc.stop(); } catch (e) {}
+    });
+    activeOscillators = [];
+
+    clearAllHighlights();
+    playBtn.textContent = '▶️ ならす（カウントつき）';
+    playBtn.classList.remove('playing');
+    statusText.textContent = '';
+  }
+
+  function startPlayback() {
+    if (isPlaying) {
+      stopPlayback();
+      return;
+    }
+
+    try {
+      if (!audioCtx) {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioContextClass();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    } catch (err) {
+      statusText.textContent = 'おとが出せませんでした: ' + err.message;
+      return;
+    }
+
+    isPlaying = true;
+    playBtn.textContent = '⏹️ とめる';
+    playBtn.classList.add('playing');
+
+    const bpm = parseInt(bpmSlider.value, 10);
+    const secPerBeat = 60 / bpm;
+    const msPerBeat = secPerBeat * 1000;
+    const beatsPerMeasure = parseInt(document.getElementById('timeSig').value, 10);
+
+    const startAudioTime = audioCtx.currentTime + 0.06;
+
+    // 1. カウントイン
+    for (let i = 0; i < beatsPerMeasure; i++) {
+      const audioTime = startAudioTime + i * secPerBeat;
+      const delayMs = (audioTime - audioCtx.currentTime) * 1000;
+
+      scheduleSound(audioTime, (i === 0) ? 1200 : 800, false);
+
+      timers.push(setTimeout(() => {
+        if (!isPlaying) return;
+        statusText.textContent = `✨ カウント: ${i + 1} ... ✨`;
+      }, delayMs));
+    }
+
+    const scoreStartAudioTime = startAudioTime + beatsPerMeasure * secPerBeat;
+    const totalBeats = playbackQueue.reduce((acc, cur) => acc + cur.durationBeats, 0);
+
+    // 2. 本編メトロノーム
+    for (let b = 0; b < totalBeats; b++) {
+      const audioTime = scoreStartAudioTime + b * secPerBeat;
+      const isFirstBeat = (b % beatsPerMeasure === 0);
+      scheduleSound(audioTime, isFirstBeat ? 1000 : 700, false);
+    }
+
+    // 3. リズム譜の発音＆音符・休符ハイライト
+    playbackQueue.forEach((item, idx) => {
+      const audioTime = scoreStartAudioTime + item.beatOffset * secPerBeat;
+      const delayMs = (audioTime - audioCtx.currentTime) * 1000;
+
+      if (!item.isRest && !item.isTiedContinuation) {
+        scheduleSound(audioTime, 580, true);
+      }
+
+      timers.push(setTimeout(() => {
+        if (!isPlaying) return;
+        statusText.textContent = '💖 えんそうちゅう... 🎶';
+        clearAllHighlights();
+        highlightNote(item.vexNote, true);
+
+        if (item.isTiedContinuation && idx > 0) {
+          highlightNote(playbackQueue[idx - 1].vexNote, true);
+        }
+      }, delayMs));
+
+      if (idx === playbackQueue.length - 1) {
+        const endMs = delayMs + item.durationBeats * msPerBeat;
+        timers.push(setTimeout(() => {
+          if (isPlaying) stopPlayback();
+        }, endMs));
+      }
+    });
+  }
+
+  document.getElementById('generate-btn').addEventListener('click', generateAndDraw);
+  document.getElementById('level').addEventListener('change', generateAndDraw);
+  document.getElementById('timeSig').addEventListener('change', generateAndDraw);
+  document.getElementById('measures').addEventListener('change', generateAndDraw);
+  playBtn.addEventListener('click', startPlayback);
+  document.getElementById('print-btn').addEventListener('click', () => window.print());
+
+  window.addEventListener('load', generateAndDraw);
+</script>
+
+</body>
+</html>
